@@ -17,6 +17,7 @@ import fillBlankRoutes from "./routes/fillBlankRoutes.js";
 import wordMatchRoutes from "./routes/wordMatchRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import googleRoutes from "./routes/googleRoutes.js";
+import sendEmail from "./utils/sendEmail.js";
 
 const app = express();
 
@@ -57,6 +58,21 @@ app.get("/", (req, res) => {
   res.send("<h1>API working fine!</h1>");
 });
 
+app.get("/test-email", async (req, res) => {
+  try {
+    await sendEmail({
+      email: "yourpersonalemail@gmail.com",
+      subject: "Test Email",
+      message: "Email service is working.",
+    });
+
+    res.send("Email sent successfully");
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).send(error.message);
+  }
+});
 // ROUTES
 
 app.use("/api/users", userRoutes);
