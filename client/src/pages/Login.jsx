@@ -79,12 +79,12 @@ const Login = () => {
             <div className="mb-2 flex items-center justify-between">
               <label className="block text-sm font-medium">Password</label>
 
-              <Link
+              {/* <Link
                 to="/forgot-password"
                 className="text-sm text-blue-600 hover:underline"
               >
                 Forgot Password?
-              </Link>
+              </Link> */}
             </div>
 
             <input
