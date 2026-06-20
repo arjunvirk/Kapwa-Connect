@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+body {
+  font-family: "Inter";
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease;
+}
+
+.retro-assistant {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.retro-assistant img {
+  width: 90px;
+  image-rendering: pixelated;
+  transition: transform 0.3s ease;
+}
+
+.retro-assistant:hover img {
+  transform: scale(1.08);
+}
+
+.assistant-chat {
+  position: fixed;
+  bottom: 130px;
+  right: 20px;
+  width: 280px;
+
+  background: #fff7e6;
+  border: 4px solid #222;
+
+  border-radius: 12px;
+  padding: 15px;
+
+  font-family: "Courier New", monospace;
+
+  box-shadow: 6px 6px 0px #222;
+}
+
+.assistant-chat h3 {
+  margin-bottom: 10px;
+}
+
+.assistant-chat p {
+  margin-bottom: 8px;
+}
+
+.assistant-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+
+  border-radius: 50%;
+
+  background: #fff7e6;
+
+  border: 3px solid #222;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+
+  cursor: pointer;
+
+  box-shadow: 4px 4px 0 #222;
+
+  z-index: 999;
+}
+
+.assistant-icon:hover {
+  transform: scale(1.1);
+}
