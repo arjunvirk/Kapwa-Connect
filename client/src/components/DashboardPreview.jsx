@@ -58,7 +58,7 @@ const DashboardPreview = () => {
 
           <div className="mb-4 rounded-2xl border p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h4 className="font-medium">Tagalog Homework</h4>
+              <h4 className="font-medium">Homework</h4>
 
               <span className="text-sm text-gray-500">Due Tomorrow</span>
             </div>

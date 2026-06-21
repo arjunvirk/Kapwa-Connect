@@ -18,7 +18,7 @@ const Hero = () => {
 
           <p className="mt-6 max-w-lg text-center text-gray-600 md:text-left">
             Interactive lessons, homework, quizzes, and guided learning designed
-            to help students master the Tagalog language step by step.
+            to help students master the Filipino language step by step.
           </p>
 
           <div className="mt-8 flex justify-center gap-4 md:justify-start">

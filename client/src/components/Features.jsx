@@ -5,7 +5,7 @@ const Features = () => {
     {
       title: "Interactive Homework",
       description:
-        "Practice Tagalog through structured assignments and guided exercises.",
+        "Practice through structured assignments and guided exercises.",
     },
 
     {
@@ -45,7 +45,7 @@ const Features = () => {
 
           <p className="mx-auto mt-5 max-w-2xl text-gray-600">
             A modern learning experience designed to help students stay
-            organized, engaged, and confident while learning Tagalog.
+            organized, engaged, and confident while learning.
           </p>
         </div>
 

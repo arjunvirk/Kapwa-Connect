@@ -17,7 +17,7 @@ const CTA = () => {
 
           <p className="mt-6 leading-7 text-gray-300">
             Join interactive lessons, complete assignments, and improve your
-            Tagalog skills through a modern and organized learning experience.
+            language skills through a modern and organized learning experience.
           </p>
 
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
