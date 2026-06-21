@@ -21,12 +21,9 @@ export const createGoogleMeetEvent = async ({
 
   // DEBUG LOGS
 
-  console.log("=================================");
-  console.log("Scheduled At Received:", scheduledAt);
-  console.log("Start Time:", startTime);
-  console.log("End Time:", endTime);
-  console.log("=================================");
-
+  console.log("scheduledAt:", scheduledAt);
+  console.log("date:", new Date(scheduledAt));
+  console.log("iso:", new Date(scheduledAt).toISOString());
   const event = await calendar.events.insert({
     calendarId: "primary",
 

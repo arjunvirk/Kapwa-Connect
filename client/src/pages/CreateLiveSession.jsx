@@ -50,11 +50,13 @@ const CreateLiveSession = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    const philippineDate = `${scheduledAt}:00+08:00`;
+
     dispatch(
       createLiveSession({
         title,
         student,
-        scheduledAt,
+        scheduledAt: philippineDate,
       }),
     );
   };
