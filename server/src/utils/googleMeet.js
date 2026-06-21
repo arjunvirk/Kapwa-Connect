@@ -19,6 +19,14 @@ export const createGoogleMeetEvent = async ({
 
   const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
 
+  // DEBUG LOGS
+
+  console.log("=================================");
+  console.log("Scheduled At Received:", scheduledAt);
+  console.log("Start Time:", startTime);
+  console.log("End Time:", endTime);
+  console.log("=================================");
+
   const event = await calendar.events.insert({
     calendarId: "primary",
 
