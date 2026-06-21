@@ -88,7 +88,9 @@ const StudentLiveSessions = () => {
                       </p>
 
                       <p className="mt-1 text-sm text-gray-500">
-                        {new Date(session.scheduledAt).toLocaleString()}
+                        {new Date(session.scheduledAt).toLocaleString("en-PH", {
+                          timeZone: "Asia/Manila",
+                        })}
                       </p>
 
                       <p className="mt-1 text-sm text-gray-500">
