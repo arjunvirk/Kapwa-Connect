@@ -54,7 +54,7 @@ const GoogleAuthButton = ({ role }) => {
 
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      toast.success("Google login successful");
+      // toast.success("Google login successful");
 
       // REDIRECT
 
