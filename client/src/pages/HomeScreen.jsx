@@ -8,7 +8,24 @@ import Testimonial from "../components/Testimonial";
 import FAQ from "../components/FAQ";
 import LiveSection from "../components/LiveSection";
 
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const HomeScreen = () => {
+  const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo?.role === "student") {
+      navigate("/student/dashboard", { replace: true });
+    }
+
+    if (userInfo?.role === "teacher") {
+      navigate("/teacher/dashboard", { replace: true });
+    }
+  }, [userInfo, navigate]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

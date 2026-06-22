@@ -52,18 +52,26 @@ const Navbar = () => {
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between">
           {/* Logo */}
 
-          <Link to="/">
-            <h1 className="text-xl font-semibold tracking-tight">
-              Kapwa Connect
-            </h1>
+          <Link
+            to={
+              currentUser
+                ? currentUser.role === "teacher"
+                  ? "/teacher/dashboard"
+                  : "/student/dashboard"
+                : "/"
+            }
+          >
+            <h1>Kapwa Connect</h1>
           </Link>
 
           {/* Desktop Navigation */}
 
           <div className="hidden items-center gap-8 md:flex">
-            <Link to="/about" className="transition hover:opacity-70">
-              About
-            </Link>
+            {!currentUser && (
+              <Link to="/about" className="transition hover:opacity-70">
+                About
+              </Link>
+            )}
           </div>
 
           {/* Right Side */}
@@ -164,21 +172,25 @@ const Navbar = () => {
         {/* Sidebar Links */}
 
         <div className="flex flex-col gap-5 text-lg">
-          <Link
-            to="/"
-            onClick={() => setMenuOpen(false)}
-            className="transition hover:translate-x-1"
-          >
-            Home
-          </Link>
+          {!currentUser && (
+            <Link
+              to="/"
+              onClick={() => setMenuOpen(false)}
+              className="transition hover:translate-x-1"
+            >
+              Home
+            </Link>
+          )}
 
-          <Link
-            to="/about"
-            onClick={() => setMenuOpen(false)}
-            className="transition hover:translate-x-1"
-          >
-            About
-          </Link>
+          {!currentUser && (
+            <Link
+              to="/about"
+              onClick={() => setMenuOpen(false)}
+              className="transition hover:translate-x-1"
+            >
+              About
+            </Link>
+          )}
 
           {!currentUser && (
             <>
