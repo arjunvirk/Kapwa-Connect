@@ -27,6 +27,8 @@ const WordMatch = () => {
 
   const [gameCompleted, setGameCompleted] = useState(false);
 
+  const [wrongMatches, setWrongMatches] = useState([]);
+
   // FETCH DATA
 
   useEffect(() => {
@@ -96,7 +98,13 @@ const WordMatch = () => {
         document.body.style.background = "";
       }, 300);
     } else {
-      // WRONG MATCH
+      setWrongMatches((prev) => [
+        ...prev,
+        {
+          tagalog: selectedLeft.tagalog,
+          english: englishWord,
+        },
+      ]);
 
       setMessage("Wrong Match ❌");
 
@@ -109,7 +117,6 @@ const WordMatch = () => {
         document.body.style.background = "";
       }, 300);
     }
-
     setTimeout(() => {
       setMessage("");
     }, 1200);
@@ -120,12 +127,47 @@ const WordMatch = () => {
   // GAME COMPLETE
 
   useEffect(() => {
-    if (game?.pairs && matches.length === game.pairs.length) {
+    if (
+      game?.pairs &&
+      matches.length + wrongMatches.length === game.pairs.length
+    ) {
       setGameCompleted(true);
 
-      speakText("Amazing! You completed the game");
+      const percentage = Math.round((matches.length / game.pairs.length) * 100);
+
+      if (percentage === 100) {
+        speakText("Perfect score. Outstanding work.");
+      } else if (percentage >= 80) {
+        speakText("Excellent job.");
+      } else if (percentage >= 60) {
+        speakText("Good work. Keep improving.");
+      } else {
+        speakText("Keep practicing. You can do better.");
+      }
     }
-  }, [matches, game]);
+  }, [matches, wrongMatches, game]);
+
+  const totalQuestions = game?.pairs?.length || 0;
+
+  const percentage =
+    totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+
+  let resultTitle = "";
+  let resultEmoji = "";
+
+  if (percentage === 100) {
+    resultTitle = "Perfect Score";
+    resultEmoji = "🏆";
+  } else if (percentage >= 80) {
+    resultTitle = "Excellent";
+    resultEmoji = "🌟";
+  } else if (percentage >= 60) {
+    resultTitle = "Good Job";
+    resultEmoji = "👍";
+  } else {
+    resultTitle = "Keep Practicing";
+    resultEmoji = "💪";
+  }
 
   return (
     <section className="min-h-screen overflow-hidden bg-linear-to-b from-black via-zinc-950 to-purple-950 px-4 py-10 text-white">
@@ -220,6 +262,10 @@ const WordMatch = () => {
                     (m) => m.tagalog === pair.tagalog,
                   );
 
+                  const wrong = wrongMatches.find(
+                    (m) => m.tagalog === pair.tagalog,
+                  );
+
                   return (
                     <motion.div
                       key={index}
@@ -230,13 +276,17 @@ const WordMatch = () => {
                       whileTap={{
                         scale: 0.97,
                       }}
-                      onClick={() => !matched && setSelectedLeft(pair)}
+                      onClick={() =>
+                        !matched && !wrong && setSelectedLeft(pair)
+                      }
                       className={`cursor-pointer rounded-3xl border p-3 md:p-6 text-center text-sm sm:text-lg md:text-2xl font-black transition-all duration-300 ${
                         selectedLeft?.tagalog === pair.tagalog
                           ? "border-yellow-400 bg-yellow-400/30 shadow-[0_0_30px_rgba(250,204,21,0.5)]"
                           : matched
                             ? "border-green-500 bg-green-500/20 shadow-[0_0_25px_rgba(34,197,94,0.4)]"
-                            : "border-zinc-700 bg-zinc-900 hover:border-purple-500 hover:bg-purple-500/10"
+                            : wrong
+                              ? "border-red-500 bg-red-500/20 shadow-[0_0_25px_rgba(239,68,68,0.4)]"
+                              : "border-zinc-700 bg-zinc-900 hover:border-purple-500 hover:bg-purple-500/10"
                       }`}
                     >
                       {pair.tagalog}
@@ -259,6 +309,9 @@ const WordMatch = () => {
                     (m) => m.english === pair.english,
                   );
 
+                  const wrong = wrongMatches.find(
+                    (m) => m.english === pair.english,
+                  );
                   return (
                     <motion.div
                       key={index}
@@ -270,12 +323,14 @@ const WordMatch = () => {
                         scale: 0.97,
                       }}
                       onClick={() =>
-                        !matched && handleEnglishClick(pair.english)
+                        !matched && !wrong && handleEnglishClick(pair.english)
                       }
                       className={`cursor-pointer rounded-3xl border p-3 md:p-6 text-center text-sm sm:text-lg md:text-2xl font-black transition-all duration-300 ${
                         matched
                           ? "border-green-500 bg-green-500/20 shadow-[0_0_25px_rgba(34,197,94,0.4)]"
-                          : "border-zinc-700 bg-zinc-900 hover:border-pink-500 hover:bg-pink-500/10"
+                          : wrong
+                            ? "border-red-500 bg-red-500/20 shadow-[0_0_25px_rgba(239,68,68,0.4)]"
+                            : "border-zinc-700 bg-zinc-900 hover:border-pink-500 hover:bg-pink-500/10"
                       }`}
                     >
                       {pair.english}
@@ -299,9 +354,27 @@ const WordMatch = () => {
                 }}
                 className="mt-14 rounded-3xl border border-green-500/30 bg-green-500/10 p-10 text-center shadow-[0_0_50px_rgba(34,197,94,0.3)]"
               >
-                <div className="mb-5 text-7xl">🏆</div>
+                <div className="mb-5 text-7xl">{resultEmoji}</div>
 
-                <h2 className="mb-4 text-5xl font-black">PERFECT MATCH 🎉</h2>
+                <h2 className="mb-4 text-5xl font-black">{resultTitle}</h2>
+
+                <p className="mb-4 text-xl text-zinc-300">
+                  You scored {score} out of {totalQuestions}
+                </p>
+
+                <p className="mb-5 text-3xl font-bold text-purple-300">
+                  {percentage}%
+                </p>
+
+                <div className="mb-6 flex justify-center gap-6">
+                  <div className="rounded-2xl bg-green-500/20 px-6 py-3">
+                    ✅ Correct: {matches.length}
+                  </div>
+
+                  <div className="rounded-2xl bg-red-500/20 px-6 py-3">
+                    ❌ Wrong: {wrongMatches.length}
+                  </div>
+                </div>
 
                 <p className="mb-5 text-zinc-300">
                   You completed the challenge.
@@ -313,6 +386,7 @@ const WordMatch = () => {
                   onClick={() => {
                     setMatches([]);
 
+                    setWrongMatches([]);
                     setScore(0);
 
                     setSelectedLeft(null);
