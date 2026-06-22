@@ -61,7 +61,7 @@ const Navbar = () => {
                 : "/"
             }
           >
-            <h1>Kapwa Connect</h1>
+            <h1 className="font-bold text-xl">Kapwa Connect</h1>
           </Link>
 
           {/* Desktop Navigation */}
